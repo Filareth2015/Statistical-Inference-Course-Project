@@ -1,6 +1,6 @@
 # Statistical Inference Course Project
 
-
+This is the project for [Coursera's statistical inference class](https://www.coursera.org/course/statinference) offered by the Johns Hopkins University. 
 
 The project consists of two parts:
 * a simulation exercise.
