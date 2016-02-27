@@ -5,18 +5,114 @@ date: "February 27, 2016"
 output: pdf_document
 ---
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+[Link to project on GitHUB](https://github.com/Filareth2015/Statistical-Inference-Course-Project.git)
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+# Overview
+In this project we are going to investigate the exponential distribution in R and compare it with the Central Limit Theorem.  
+
+The exponential distribution can be simulated in R with rexp(n, lambda) where lambda is the rate parameter. The mean of exponential distribution is 1/lambda and the standard deviation is also 1/lambda. 
+We will set lambda = 0.2 for all of the simulations. Also we will investigate the distribution of averages of 40 exponentials. We will do a thousand simulations.
+
+# 1. Simulations
 
 ```{r}
-summary(cars)
+# loading neccesary libraries
+library(ggplot2) 
+
+# set constants
+lambda <- 0.2 # rate parameter for exponential distribution 
+n <- 40 # number of exponetials
+numberOfSimulations <- 1000 # number of simulations
+
+# set the seed to create reproducability
+set.seed(123456)
+
+# creating matrix with observations
+exponentialDistributions <- matrix(data=rexp(n * numberOfSimulations, 
+                                             lambda), 
+                                   nrow=numberOfSimulations)
+
+# creating data frame with means of rows in the matrix
+exponentialDistributionMeans <- data.frame(means=apply(exponentialDistributions, 1, mean))
+
+# plotting the means
+ggplot(data = exponentialDistributionMeans, aes(x = means)) + 
+              geom_histogram(binwidth=0.1, color = "steelblue") + 
+              labs(title = "Distribution of averages of samples,
+    drawn from exponential distribution with lambda=0.2") + 
+              labs(x = "Means") +
+              labs(y = "Frequency")
 ```
 
-You can also embed plots, for example:
+# 2. Sample Mean versus Theoretical Mean  
+
+The theoretical mean $\mu$ of a exponential distribution of rate $\lambda$ is
+
+$\mu= \frac{1}{\lambda}$ , then $\mu$ for $\lambda$=.2 equal:
 
 ```{r, echo=FALSE}
-plot(cars)
+# calculating theoretical mean $\mu$
+mu <- 1 / lambda
+mu
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+Lets define sample mean and compare it with theoretical:
+
+```{r}
+# calculating sample mean 
+SampleMean <- mean(exponentialDistributionMeans$means)
+SampleMean
+```
+```{r, echo=FALSE}
+# show sample mean on the plot
+ggplot(data = exponentialDistributionMeans, aes(x = means)) + 
+              geom_histogram(binwidth=0.1, color = "steelblue") + 
+              labs(title = "Defining mean on the plot (look on vertical line) ") + 
+              labs(x = "Means") +
+              labs(y = "Frequency") + 
+              geom_vline(xintercept = SampleMean)
+
+```
+So, as you can see the theoretical mean (`r mu`) and sample mean (`r SampleMean`) are very close.
+
+# 3. Sample Variance versus Theoretical Variance
+The theoretical standard deviation $\sigma$ of a exponential distribution of rate $\lambda$ is:
+$\sigma = \frac{1/\lambda}{\sqrt{n}}$ , then $\sigma$ for $\lambda$=.2 and $n$=40 equal:
+
+```{r, echo=FALSE}
+sd <- 1/lambda/sqrt(n)
+sd
+```
+The theoretical variance $Var$ of standard deviation $\sigma$ is
+
+$Var = \sigma^2$ 
+
+```{r, echo=FALSE}
+Var <- sd^2
+Var
+```
+
+Lets define the sample variance ($Var_x$) and the sample standard deviation $\sigma_x$.
+```{r}
+sd_x <- sd(exponentialDistributionMeans$means)
+sd_x
+
+Var_x <- var(exponentialDistributionMeans$means)
+Var_x
+```
+
+As you can see standard deviation and variance in theory (`r sd` and `r Var`) and sample (`r sd_x` and `r Var_x`) are pretty close.
+
+# 4. Distribution
+
+Due to the Central Limit Theorem, the averages of samples should follow a normal distribution. Lets show it.
+
+```{r echo=FALSE}
+# plot the means
+ggplot(data = exponentialDistributionMeans, aes(x = means)) + 
+  geom_histogram(binwidth=0.1, aes(y=..density..), alpha=0.2) + 
+  geom_density(colour="blue", size=1)
+  
+```
+
+As shown in the graph, the calculated distribution of means of random sampled exponantial distributions overlaps with the normal distribution, due to the Central Limit Theorem. The more samples we would get (now 1000), the closer will the density distribution be to the normal distribution bell curve.
