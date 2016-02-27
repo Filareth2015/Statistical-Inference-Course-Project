@@ -17,6 +17,25 @@ Illustrate via simulation and associated explanatory text the properties of the 
 
 In point 3, focus on the difference between the distribution of a large collection of random exponentials and the distribution of a large collection of averages of 40 exponentials.
 
+As a motivating example, compare the distribution of 1000 random uniforms
+
+```R
+hist(runif(1000))
+```
+
+and the distribution of 1000 averages of 40 random uniforms  
+
+```R
+mns = NULL
+for (i in 1 : 1000) mns = c(mns, mean(runif(40)))
+hist(mns)
+```
+
+This distribution looks far more Gaussian than the original uniform distribution!  
+
+This exercise is asking you to use your knowledge of the theory given in class to relate the two distributions.    
+Confused?  Try re-watching video lecture 07 for a starter on how to complete this project.  
+
 ### Sample Project Report Structure
 
 Of course, there are multiple ways one could structure a report to address the requirements above. However, the more clearly you pose and answer each question, the easier it will be for reviewers to clearly identify and evaluate your work.
