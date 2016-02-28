@@ -10,7 +10,7 @@ output: pdf_document
 # Overview
 In this project we are going to investigate the exponential distribution in R and compare it with the Central Limit Theorem.  
 
-The exponential distribution can be simulated in R with rexp(n, lambda) where lambda is the rate parameter. The mean of exponential distribution is 1/lambda and the standard deviation is also 1/lambda. 
+The exponential distribution can be simulated in R with rexp(n, lambda) where lambda is the rate parameter. The mean of exponential distribution is 1/lambda and the standard deviation is also 1/lambda.   
 We will set lambda = 0.2 for all of the simulations. Also we will investigate the distribution of averages of 40 exponentials. We will do a thousand simulations.
 
 # 1. Simulations
@@ -38,7 +38,7 @@ exponentialDistributionMeans <- data.frame(means=apply(exponentialDistributions,
 # plotting the means
 ggplot(data = exponentialDistributionMeans, aes(x = means)) + 
               geom_histogram(binwidth=0.1, color = "steelblue") + 
-              labs(title = "Distribution of averages of samples,
+              labs(title = "Distribution of samples means,
     drawn from exponential distribution with lambda=0.2") + 
               labs(x = "Means") +
               labs(y = "Frequency")
@@ -83,9 +83,7 @@ $\sigma = \frac{1/\lambda}{\sqrt{n}}$ , then $\sigma$ for $\lambda$=.2 and $n$=4
 sd <- 1/lambda/sqrt(n)
 sd
 ```
-The theoretical variance $Var$ of standard deviation $\sigma$ is
-
-$Var = \sigma^2$ 
+The theoretical variance $Var = \sigma^2$. Then its equal:   
 
 ```{r, echo=FALSE}
 Var <- sd^2
@@ -101,7 +99,7 @@ Var_x <- var(exponentialDistributionMeans$means)
 Var_x
 ```
 
-**Infer:** As you can see standard deviation and variance in theory (`r sd` and `r Var`) and sample (`r sd_x` and `r Var_x`) are pretty close.
+**Infer:** As you can see standard deviation and variance in theory (`r sd` and `r Var`) and in the sample (`r sd_x` and `r Var_x`) are pretty close.
 
 # 4. Distribution
 
@@ -115,4 +113,4 @@ ggplot(data = exponentialDistributionMeans, aes(x = means)) +
   
 ```
 
-**Infer:** As shown in the graph, the calculated distribution of means of random sampled exponantial distributions overlaps with the normal distribution, due to the Central Limit Theorem. The more samples we would get (now 1000), the closer will the density distribution be to the normal distribution bell curve.
+**Infer:** As shown on the plot, the calculated distribution of means of random sampled exponantial distributions pretty close, in accordance to the Central Limit Theorem, to the normal distribution. Its what we wanted to prove.
