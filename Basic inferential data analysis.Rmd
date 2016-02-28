@@ -1,0 +1,47 @@
+---
+title: "Basic inferential data analysis"
+author: "Zanin Pavel Yerivich"
+date: "February 28, 2016"
+output: pdf_document
+---
+
+library(datasets)
+data(ToothGrowth)
+str(ToothGrowth)
+head(ToothGrowth)
+summary(ToothGrowth)
+
+library(ggplot2)
+
+ggplot(ToothGrowth, aes(x=factor(dose), y=len)) + 
+  facet_grid(.~supp) +
+  geom_boxplot(aes(fill = supp)) +
+  labs(title="Guinea pig tooth length by dosage for each type of supplement", 
+    x="Dose (mg/day)",
+    y="Tooth Length")
+    
+hypoth1<-t.test(len ~ supp, data = ToothGrowth)
+hypoth1$conf.int
+hypoth1$p.value
+
+hypoth2<-t.test(len ~ supp, data = subset(ToothGrowth, dose == 0.5))
+hypoth2$conf.int
+hypoth2$p.value
+
+hypoth3<-t.test(len ~ supp, data = subset(ToothGrowth, dose == 1))
+hypoth3$conf.int
+hypoth3$p.value
+
+hypoth4<-t.test(len ~ supp, data = subset(ToothGrowth, dose == 2))
+hypoth4$conf.int
+hypoth4$p.value
+
+
+
+len<-ToothGrowth$len
+supp<-ToothGrowth$supp
+dose<-ToothGrowth$dose
+
+t.test(len[supp=="OJ"], len[supp=="VC"], paired = FALSE, var.equal = FALSE)
+t.test(len[dose==2], len[dose==1], paired = FALSE, var.equal = TRUE)
+t.test(len[dose==1], len[dose==0.5], paired = FALSE, var.equal = TRUE)
