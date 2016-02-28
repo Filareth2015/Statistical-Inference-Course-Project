@@ -5,43 +5,84 @@ date: "February 28, 2016"
 output: pdf_document
 ---
 
-library(datasets)
-data(ToothGrowth)
-str(ToothGrowth)
-head(ToothGrowth)
-summary(ToothGrowth)
+[Link to project on GitHUB](https://github.com/Filareth2015/Statistical-Inference-Course-Project.git)
 
-library(ggplot2)
+# Overview
+In this project we are going to analyze the ToothGrowth data from the R datasets package.  
+This dataset describes how changes the length of odontoblasts (teeth) in each of 10 guinea pigs at each of three dose levels of Vitamin C (0.5, 1, and 2 mg) with each of two delivery methods (orange juice or ascorbic acid).
+
+# 1. Getting data and exploratory analysis
+
+For start working load the dataset:
+```{r}
+library(datasets) #loading neccesary library
+data(ToothGrowth) #loading specified dataset
+```
+
+Let's see what are these dataset:
+```{r}
+str(ToothGrowth) #compactly displaying the internal structure 
+head(ToothGrowth) #showing the first 6 rows of dataset
+summary(ToothGrowth) #showing dataset's summary  
+ToothGrowth$dose # showing the list of doses
+```
+
+So, as we can see, we've got 60 observations, for 2 supplement types (VC or OJ) and 3 dose levels of Vitamin C (0.5, 1, and 2). Dataset's description not lied to us =)
+
+For the next step let's make exploratory plot's for this data:  
+```{r}
+library(ggplot2) #loading neccesary library
 
 ggplot(ToothGrowth, aes(x=factor(dose), y=len)) + 
   facet_grid(.~supp) +
   geom_boxplot(aes(fill = supp)) +
-  labs(title="Guinea pig tooth length by dosage for each type of supplement", 
-    x="Dose (mg/day)",
+  labs(title="Guinea pig tooth length by supplement type 
+  (orange juice (OJ) or ascorbic acid (VC))", 
+    x="Dose (mg)",
     y="Tooth Length")
-    
-hypoth1<-t.test(len ~ supp, data = ToothGrowth)
-hypoth1$conf.int
-hypoth1$p.value
+```
 
-hypoth2<-t.test(len ~ supp, data = subset(ToothGrowth, dose == 0.5))
-hypoth2$conf.int
-hypoth2$p.value
+# 2. Hypothesis testing
 
-hypoth3<-t.test(len ~ supp, data = subset(ToothGrowth, dose == 1))
-hypoth3$conf.int
-hypoth3$p.value
+## Hypotesis 1: There is no difference between supplement types (orange juice or ascorbic acid), regardless from doses  
 
-hypoth4<-t.test(len ~ supp, data = subset(ToothGrowth, dose == 2))
-hypoth4$conf.int
-hypoth4$p.value
+For testing this let`s try t.test:
+```{r}
+t.test(len ~ supp, data = ToothGrowth)
+```
 
+So, if confidence interval include zero and p-value is bigger than usual $\alpha$ level (.05) then we our hypotesis is true and we cannot reject it.
 
+## Hypotesis 2: Effect from 0.5 mg dose for both supplement types is equal
 
-len<-ToothGrowth$len
-supp<-ToothGrowth$supp
-dose<-ToothGrowth$dose
+For testing this try t.test again:
+```{r}
+t.test(len ~ supp, data = subset(ToothGrowth, dose == 0.5))
+```
 
-t.test(len[supp=="OJ"], len[supp=="VC"], paired = FALSE, var.equal = FALSE)
-t.test(len[dose==2], len[dose==1], paired = FALSE, var.equal = TRUE)
-t.test(len[dose==1], len[dose==0.5], paired = FALSE, var.equal = TRUE)
+As p-value is lower than usual $\alpha$ level (.05) then our hypotesis isn't true and we reject it. Orange juice has much effectiveness for this dose than ascorbic acid.
+
+## Hypotesis 3: Effect from 1 mg dose for both supplement types is equal
+
+For testing this try t.test again:
+```{r}
+t.test(len ~ supp, data = subset(ToothGrowth, dose == 1))
+```
+
+As p-value is lower than usual $\alpha$ level (.05) then our hypotesis isn't true and we reject it. Orange juice has much effectiveness for this dose than ascorbic acid.
+
+## Hypotesis 4: Effect from 2 mg dose for both supplement types is equal
+
+For testing this try t.test again:
+```{r}
+t.test(len ~ supp, data = subset(ToothGrowth, dose == 2))
+```
+
+So, if confidence interval include zero and p-value is bigger than usual $\alpha$ level (.05) then we our hypotesis is true and we cannot reject it.
+
+# 3. Conclusions 
+Dataset ToothGrowth allows to us make next conclusions:   
+** Vitamin C consumption results to increasing pig's tooth growth.   
+** In small doses (0.5 and 1 mg) orange juice much effective than ascorbic acid.    
+** In big dose (2 mg) both supply types have same effectiveness.
+
