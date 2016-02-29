@@ -1,6 +1,6 @@
 ---
 title: "Statistical Inference Course Project - simulation exercise"
-author: "Zanin Pavel Yerivich"
+author: "Zanin Pavel"
 date: "February 27, 2016"
 output: pdf_document
 ---
