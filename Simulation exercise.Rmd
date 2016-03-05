@@ -73,6 +73,7 @@ ggplot(data = exponentialDistributionMeans, aes(x = means)) +
               geom_vline(xintercept = SampleMean)
 
 ```
+
 **Infer:** So, as you can see the theoretical mean (`r mu`) and sample mean (`r SampleMean`) are very close.
 
 # 3. Sample Variance versus Theoretical Variance

@@ -3,6 +3,5 @@ account: rpubs
 server: rpubs.com
 bundleId:
         https://api.rpubs.com/api/v1/document/157023/fc269a5397a6484c826b627a496a70a3
-url:
-        http://rpubs.com/publish/claim/157023/d0cfd0d8a2a34607bae0fe84ecf77092
-when: 1456705616.73233
+url: http://rpubs.com/Zanin_Pavel/157023
+when: 1457197975.82165
