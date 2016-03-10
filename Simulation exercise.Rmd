@@ -2,7 +2,7 @@
 title: "Statistical Inference Course Project - simulation exercise"
 author: "Zanin Pavel"
 date: "February 27, 2016"
-output: pdf_document
+output: html_document
 ---
 
 [Link to project on GitHUB](https://github.com/Filareth2015/Statistical-Inference-Course-Project.git)
@@ -15,7 +15,7 @@ We will set lambda = 0.2 for all of the simulations. Also we will investigate th
 
 # 1. Simulations
 
-```{r}
+```{r, collapse = TRUE, warning=FALSE, message = FALSE, echo=TRUE, results='markup'}
 # loading neccesary libraries
 library(ggplot2) 
 
@@ -50,7 +50,7 @@ The theoretical mean $\mu$ of a exponential distribution of rate $\lambda$ is
 
 $\mu= \frac{1}{\lambda}$ , then $\mu$ for $\lambda$=.2 equal:
 
-```{r, echo=FALSE}
+```{r, , collapse = TRUE, warning=FALSE, message = FALSE, echo=FALSE, results='markup'}
 # calculating theoretical mean $\mu$
 mu <- 1 / lambda
 mu
@@ -58,7 +58,7 @@ mu
 
 Lets define sample mean and compare it with theoretical:
 
-```{r}
+```{r, collapse = TRUE, warning=FALSE, message = FALSE, echo=TRUE, results='markup'}
 # calculating sample mean 
 SampleMean <- mean(exponentialDistributionMeans$means)
 SampleMean

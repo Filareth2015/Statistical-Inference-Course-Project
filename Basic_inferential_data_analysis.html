@@ -107,9 +107,9 @@ data(ToothGrowth) #loading specified dataset</code></pre>
 ## [52] 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0 2.0</code></pre>
 <p>So, as we can see, we’ve got 60 observations, for 2 supplement types (VC or OJ) and 3 dose levels of Vitamin C (0.5, 1, and 2). Dataset’s description not lied to us =)</p>
 <p>For the next step let’s make exploratory plot’s for this data:</p>
-<pre class="r"><code>library(ggplot2) #loading neccesary library</code></pre>
-<pre><code>## Warning: package 'ggplot2' was built under R version 3.2.3</code></pre>
-<pre class="r"><code>ggplot(ToothGrowth, aes(x=factor(dose), y=len)) + 
+<pre class="r"><code>library(ggplot2) #loading neccesary library
+
+ggplot(ToothGrowth, aes(x=factor(dose), y=len)) + 
   facet_grid(.~supp) +
   geom_boxplot(aes(fill = supp)) +
   labs(title=&quot;Guinea pig tooth length by supplement type 

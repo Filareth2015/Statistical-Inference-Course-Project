@@ -2,7 +2,7 @@
 title: "Basic inferential data analysis"
 author: "Zanin Pavel"
 date: "February 28, 2016"
-output: pdf_document
+output: html_document
 ---
 
 [Link to project on GitHUB](https://github.com/Filareth2015/Statistical-Inference-Course-Project.git)
@@ -30,7 +30,7 @@ ToothGrowth$dose # showing the list of doses
 So, as we can see, we've got 60 observations, for 2 supplement types (VC or OJ) and 3 dose levels of Vitamin C (0.5, 1, and 2). Dataset's description not lied to us =)
 
 For the next step let's make exploratory plot's for this data:  
-```{r}
+```{r, collapse = TRUE, warning=FALSE, message = FALSE, echo=TRUE, results='markup'}
 library(ggplot2) #loading neccesary library
 
 ggplot(ToothGrowth, aes(x=factor(dose), y=len)) + 
